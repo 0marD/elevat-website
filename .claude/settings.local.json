@@ -34,7 +34,11 @@
       "Bash(yarn dev 2>&1)",
       "Bash(yarn test --run 2>&1)",
       "Bash(pkill -f \"next dev\" 2>/dev/null; sleep 1; yarn dev 2>&1)",
-      "Bash(pkill -f \"next\" 2>/dev/null; rm -f /home/omar/projects/elevate/.next/dev/lock; echo \"done\")"
+      "Bash(pkill -f \"next\" 2>/dev/null; rm -f /home/omar/projects/elevate/.next/dev/lock; echo \"done\")",
+      "Bash(timeout 12 yarn dev 2>&1 || true)",
+      "Bash(yarn install 2>&1)",
+      "Bash(yarn add -D @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom 2>&1)",
+      "Bash(yarn add -D @testing-library/dom 2>&1 | tail -5)"
     ]
   }
 }
