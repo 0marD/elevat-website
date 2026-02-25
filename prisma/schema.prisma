@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cotizacion {
+  id            String   @id @default(uuid())
+  nombre        String
+  email         String
+  whatsapp      String
+  tipo_viaje    String
+  destino       String
+  fecha_salida  String   @default("")
+  fecha_regreso String   @default("")
+  adultos       String
+  ninos         String
+  presupuesto   String   @default("")
+  categoria     String
+  intereses     String[]
+  mensaje       String   @default("")
+  estado        String   @default("pendiente")
+  creadoEn      DateTime @default(now())
+
+  @@map("cotizaciones")
+}
+
+model BlogPost {
+  id            String   @id @default(uuid())
+  titulo        String
+  extracto      String
+  contenido     String
+  slug          String   @unique
+  imagenPortada String?
+  categoria     String
+  publicado     Boolean  @default(false)
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  @@map("blog_posts")
+}
+
+model Testimonio {
+  id           String   @id @default(uuid())
+  nombre       String
+  ciudad       String
+  viaje        String
+  texto        String
+  calificacion Int
+  visible      Boolean  @default(true)
+  orden        Int
+  creadoEn     DateTime @default(now())
+
+  @@map("testimonios")
+}
+
+model Destino {
+  id              String   @id @default(uuid())
+  nombre          String
+  slug            String   @unique
+  pais            String
+  tipo            String
+  descripcion     String
+  imagenPrincipal String
+  etiquetas       String[]
+  activo          Boolean  @default(true)
+  creadoEn        DateTime @default(now())
+
+  @@map("destinos")
+}

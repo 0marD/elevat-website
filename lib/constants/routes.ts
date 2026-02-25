@@ -1,0 +1,21 @@
+export const ROUTES = {
+  home: '/',
+  cotizacion: '/cotizacion',
+  destinos: '/destinos',
+  destino: (slug: string) => `/destinos/${slug}`,
+  testimonios: '/testimonios',
+  blog: '/blog',
+  articulo: (slug: string) => `/blog/${slug}`,
+  contacto: '/contacto',
+  admin: {
+    dashboard: '/admin',
+    blog: '/admin/blog',
+    blogNuevo: '/admin/blog/nuevo',
+    blogEditar: (id: string) => `/admin/blog/${id}`,
+    testimonios: '/admin/testimonios',
+    testimonioNuevo: '/admin/testimonios/nuevo',
+    destinos: '/admin/destinos',
+    destinoNuevo: '/admin/destinos/nuevo',
+    cotizaciones: '/admin/cotizaciones',
+  },
+} as const

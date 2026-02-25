@@ -1,0 +1,68 @@
+[
+  {
+    "id": "seed-1",
+    "nombre": "Andrea M.",
+    "ciudad": "Ciudad de México",
+    "viaje": "Luna de miel en Toscana",
+    "texto": "Nunca imaginé que un viaje podía ser tan perfecto en cada detalle. Desde el primer contacto hasta que regresamos, nos sentimos completamente cuidados. El hotel que eligieron para nosotros no aparece en ningún buscador — y era exactamente lo que habíamos soñado.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 1,
+    "creadoEn": "2024-11-01T10:00:00.000Z"
+  },
+  {
+    "id": "seed-2",
+    "nombre": "Carlos R.",
+    "ciudad": "Monterrey",
+    "viaje": "Viaje corporativo a Nueva York",
+    "texto": "Organicé un viaje de trabajo para 8 directivos con reuniones, cenas de negocios y tiempo libre. Todo coordinado perfectamente. La atención y la respuesta inmediata me ahorraron horas de trabajo. Definitivamente, el proveedor de viajes corporativos que buscaba.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 2,
+    "creadoEn": "2024-11-15T10:00:00.000Z"
+  },
+  {
+    "id": "seed-3",
+    "nombre": "Sofía y Luis",
+    "ciudad": "Guadalajara",
+    "viaje": "Aniversario en Maldivas",
+    "texto": "La villa sobre el agua era increíble pero lo que realmente nos sorprendió fue el nivel de personalización. Había un detalle especial en la habitación con nuestros nombres y una nota a mano. Esas cosas no las ofrece una agencia de internet.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 3,
+    "creadoEn": "2024-12-01T10:00:00.000Z"
+  },
+  {
+    "id": "seed-4",
+    "nombre": "Fernanda L.",
+    "ciudad": "CDMX",
+    "viaje": "Familia en Riviera Maya",
+    "texto": "Viajamos con tres niños de distintas edades y el itinerario fue perfecto para todos. Actividades para los niños, spa para mí, y golf para mi esposo. Lo que parecía imposible de coordinar, ÉLEVA lo resolvió en 48 horas.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 4,
+    "creadoEn": "2024-12-15T10:00:00.000Z"
+  },
+  {
+    "id": "seed-5",
+    "nombre": "Miguel A.",
+    "ciudad": "Querétaro",
+    "viaje": "Aventura en Patagonia",
+    "texto": "Quería algo fuera de lo común y me entregaron exactamente eso. Guías expertos, logística impecable en una de las regiones más complejas del mundo, y un itinerario que equilibró la aventura con el descanso. Regreso sin duda.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 5,
+    "creadoEn": "2025-01-10T10:00:00.000Z"
+  },
+  {
+    "id": "seed-6",
+    "nombre": "Daniela P.",
+    "ciudad": "Ciudad de México",
+    "viaje": "Kioto en temporada de cerezos",
+    "texto": "Conseguir hospedaje en Kioto durante la temporada de sakura parecía imposible. No solo lo lograron sino que encontraron un ryokan familiar que fue el punto más alto del viaje. El conocimiento que tienen de los destinos marca toda la diferencia.",
+    "calificacion": 5,
+    "visible": true,
+    "orden": 6,
+    "creadoEn": "2025-01-20T10:00:00.000Z"
+  }
+]

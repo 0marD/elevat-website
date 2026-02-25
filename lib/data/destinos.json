@@ -1,0 +1,110 @@
+[
+  {
+    "id": "d1a2b3c4-e5f6-7890-abcd-ef1234567890",
+    "nombre": "Los Cabos",
+    "slug": "los-cabos",
+    "pais": "México",
+    "tipo": "Playa de lujo",
+    "descripcion": "El Pacífico más exclusivo del país. Resorts de autor, avistamiento de ballenas y atardeceres únicos.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=700&q=80",
+    "etiquetas": ["Playa", "Lujo", "Romance"],
+    "activo": true,
+    "creadoEn": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "d2b3c4d5-f6a7-8901-bcde-f01234567891",
+    "nombre": "Riviera Maya",
+    "slug": "riviera-maya",
+    "pais": "México",
+    "tipo": "Todo incluido premium",
+    "descripcion": "Cenotes, selva maya y el Caribe turquesa. La experiencia mexicana más completa.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=700&q=80",
+    "etiquetas": ["Playa", "Familia", "Cultura"],
+    "activo": true,
+    "creadoEn": "2024-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "d3c4d5e6-a7b8-9012-cdef-012345678912",
+    "nombre": "Ciudad de México",
+    "slug": "ciudad-de-mexico",
+    "pais": "México",
+    "tipo": "Gastronomía & cultura",
+    "descripcion": "Una de las ciudades más vibrantes del mundo. Arte, gastronomía de clase mundial y vida nocturna.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=700&q=80",
+    "etiquetas": ["Cultura", "Gastronomía", "Arte"],
+    "activo": true,
+    "creadoEn": "2024-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "d4d5e6f7-b8c9-0123-defa-123456789023",
+    "nombre": "Toscana",
+    "slug": "toscana",
+    "pais": "Italia",
+    "tipo": "Cultura & vino",
+    "descripcion": "Viñedos centenarios, pueblos medievales y la cuna del Renacimiento. Para los que aprecian la belleza lenta.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=700&q=80",
+    "etiquetas": ["Cultura", "Gastronomía", "Romance"],
+    "activo": true,
+    "creadoEn": "2024-01-04T00:00:00.000Z"
+  },
+  {
+    "id": "d5e6f7a8-c9d0-1234-efab-234567890134",
+    "nombre": "Kioto",
+    "slug": "kioto",
+    "pais": "Japón",
+    "tipo": "Experiencia cultural",
+    "descripcion": "Jardines zen, templos milenarios y la ceremonia del té. Japón en su forma más espiritual y refinada.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=700&q=80",
+    "etiquetas": ["Cultura", "Espiritual", "Fotografía"],
+    "activo": true,
+    "creadoEn": "2024-01-05T00:00:00.000Z"
+  },
+  {
+    "id": "d6f7a8b9-d0e1-2345-fabc-345678901245",
+    "nombre": "Santorini",
+    "slug": "santorini",
+    "pais": "Grecia",
+    "tipo": "Romance & lujo",
+    "descripcion": "Cúpulas azules sobre el Egeo. El destino más romántico de Europa, perfectamente curado para dos.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=700&q=80",
+    "etiquetas": ["Playa", "Romance", "Lujo"],
+    "activo": true,
+    "creadoEn": "2024-01-06T00:00:00.000Z"
+  },
+  {
+    "id": "d7a8b9c0-e1f2-3456-abcd-456789012356",
+    "nombre": "Patagonia",
+    "slug": "patagonia",
+    "pais": "Argentina / Chile",
+    "tipo": "Aventura & naturaleza",
+    "descripcion": "El fin del mundo en toda su magnitud. Glaciares, torres de granito y silencio absoluto.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1531761535209-180857e963b9?w=700&q=80",
+    "etiquetas": ["Aventura", "Naturaleza", "Fotografía"],
+    "activo": true,
+    "creadoEn": "2024-01-07T00:00:00.000Z"
+  },
+  {
+    "id": "d8b9c0d1-f2a3-4567-bcde-567890123467",
+    "nombre": "Nueva York",
+    "slug": "nueva-york",
+    "pais": "EUA",
+    "tipo": "Ciudad & cultura",
+    "descripcion": "Broadway, los mejores restaurantes del mundo y compras ilimitadas. La ciudad que nunca duerme.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=700&q=80",
+    "etiquetas": ["Ciudad", "Arte", "Compras"],
+    "activo": true,
+    "creadoEn": "2024-01-08T00:00:00.000Z"
+  },
+  {
+    "id": "d9c0d1e2-a3b4-5678-cdef-678901234578",
+    "nombre": "Maldivas",
+    "slug": "maldivas",
+    "pais": "Océano Índico",
+    "tipo": "Lujo absoluto",
+    "descripcion": "Villas sobre el agua, arrecifes de coral vírgenes y el silencio del Índico. El lujo en su forma más pura.",
+    "imagenPrincipal": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=700&q=80",
+    "etiquetas": ["Playa", "Lujo", "Romance"],
+    "activo": true,
+    "creadoEn": "2024-01-09T00:00:00.000Z"
+  }
+]
