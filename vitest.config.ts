@@ -11,6 +11,7 @@ export default defineConfig({
     environmentMatchGlobs: [
       ['tests/components/**', 'jsdom'],
     ],
+    maxForks: 2,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],

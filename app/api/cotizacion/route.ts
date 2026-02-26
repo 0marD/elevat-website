@@ -4,8 +4,6 @@ import { CotizacionSchema } from '@/lib/validations/cotizacion'
 import { create, serialize } from '@/lib/data/cotizaciones-store'
 import { cotizacionEmailHtml, cotizacionEmailSubject } from '@/lib/email/cotizacion-template'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '523337084290'
 
 function buildWhatsAppUrl(nombre: string, destino: string): string {
@@ -31,6 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const fromEmail  = process.env.RESEND_FROM ?? 'ÉLEVA <onboarding@resend.dev>'
 
   if (adminEmail && process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     resend.emails.send({
       from:    fromEmail,
       to:      adminEmail,

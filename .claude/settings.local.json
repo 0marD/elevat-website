@@ -38,7 +38,10 @@
       "Bash(timeout 12 yarn dev 2>&1 || true)",
       "Bash(yarn install 2>&1)",
       "Bash(yarn add -D @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom 2>&1)",
-      "Bash(yarn add -D @testing-library/dom 2>&1 | tail -5)"
+      "Bash(yarn add -D @testing-library/dom 2>&1 | tail -5)",
+      "Bash(vercel --version 2>/dev/null || echo \"Vercel CLI not installed\")",
+      "Bash(vercel env ls 2>&1 | head -50)",
+      "Bash(vercel project ls 2>&1 | head -20)"
     ]
   }
 }

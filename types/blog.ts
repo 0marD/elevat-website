@@ -4,7 +4,7 @@ export interface BlogPost {
   extracto: string
   contenido: string
   slug: string
-  imagenPortada?: string
+  imagenPortada: string | null
   categoria: string
   publicado: boolean
   creadoEn: Date
