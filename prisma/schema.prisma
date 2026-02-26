@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+        
 
 model Cotizacion {
   id            String   @id @default(uuid())
