@@ -71,3 +71,13 @@ model Destino {
 
   @@map("destinos")
 }
+
+model PushSubscription {
+  id        String   @id @default(uuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  creadoEn  DateTime @default(now())
+
+  @@map("push_subscriptions")
+}

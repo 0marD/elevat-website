@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getPublished, getAll, create, serialize } from '@/lib/data/blog-store'
 import { BlogPostSchema } from '@/lib/validations/blog'
+import { sendPushToAll } from '@/lib/push/send'
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = request.nextUrl
@@ -33,5 +34,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const post = await create(result.data)
+
+  if (post.publicado) {
+    sendPushToAll({
+      title: 'Nuevo artículo en ÉLEVA.',
+      body:  post.titulo,
+      url:   `/blog/${post.slug}`,
+    }).catch((err: unknown) => console.error('[push] blog:', err))
+  }
+
   return NextResponse.json(serialize(post), { status: 201 })
 }

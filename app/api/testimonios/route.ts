@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getAll, getVisible, create, serialize } from '@/lib/data/testimonios-store'
 import { TestimonioSchema } from '@/lib/validations/testimonio'
+import { sendPushToAll } from '@/lib/push/send'
 
 // GET /api/testimonios          → testimonios visibles (público)
 // GET /api/testimonios?all=1    → todos (requiere sesión admin)
@@ -43,5 +44,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const nuevo = await create(result.data)
+
+  sendPushToAll({
+    title: 'Nueva experiencia compartida.',
+    body:  `${nuevo.nombre} comparte su viaje`,
+    url:   '/testimonios',
+  }).catch((err: unknown) => console.error('[push] testimonio:', err))
+
   return NextResponse.json(serialize(nuevo), { status: 201 })
 }

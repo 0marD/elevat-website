@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getAll, setActivo, update, remove, serialize } from '@/lib/data/destinos-store'
 import { DestinoSchema } from '@/lib/validations/destino'
+import { sendPushToAll } from '@/lib/push/send'
 
 interface RouteContext {
   params: Promise<{ id: string }>
@@ -60,6 +61,15 @@ export async function PUT(
     if (!updated) {
       return NextResponse.json({ error: 'Destino no encontrado' }, { status: 404 })
     }
+
+    if (updated.activo) {
+      sendPushToAll({
+        title: 'Nuevo destino en ÉLEVA.',
+        body:  `${updated.nombre}, ${updated.pais}`,
+        url:   `/destinos/${updated.slug}`,
+      }).catch((err: unknown) => console.error('[push] destino activate:', err))
+    }
+
     return NextResponse.json(serialize(updated))
   }
 

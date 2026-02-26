@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getAll, getActivos, create, serialize } from '@/lib/data/destinos-store'
 import { DestinoSchema } from '@/lib/validations/destino'
+import { sendPushToAll } from '@/lib/push/send'
 
 // GET /api/destinos          → destinos activos (público)
 // GET /api/destinos?all=1    → todos (requiere sesión admin)
@@ -43,5 +44,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const nuevo = await create(result.data)
+
+  sendPushToAll({
+    title: 'Nuevo destino en ÉLEVA.',
+    body:  `${nuevo.nombre}, ${nuevo.pais}`,
+    url:   `/destinos/${nuevo.slug}`,
+  }).catch((err: unknown) => console.error('[push] destino:', err))
+
   return NextResponse.json(serialize(nuevo), { status: 201 })
 }

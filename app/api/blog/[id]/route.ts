@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getById, update, setPublished, remove, serialize } from '@/lib/data/blog-store'
 import { BlogPostSchema } from '@/lib/validations/blog'
+import { sendPushToAll } from '@/lib/push/send'
 
 interface RouteContext {
   params: Promise<{ id: string }>
@@ -33,6 +34,15 @@ export async function PUT(
   if ('publicado' in body && Object.keys(body).length === 1) {
     const updated = await setPublished(id, Boolean(body.publicado))
     if (!updated) return NextResponse.json({ error: 'No encontrado' }, { status: 404 })
+
+    if (updated.publicado) {
+      sendPushToAll({
+        title: 'Nuevo artículo en ÉLEVA.',
+        body:  updated.titulo,
+        url:   `/blog/${updated.slug}`,
+      }).catch((err: unknown) => console.error('[push] blog publish:', err))
+    }
+
     return NextResponse.json(serialize(updated))
   }
 
