@@ -13,7 +13,7 @@ const CSP = [
   "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' blob: data: https://images.unsplash.com",
+  "img-src 'self' blob: data: https://images.unsplash.com https://res.cloudinary.com",
   "connect-src 'self' https://api.resend.com",
   "frame-src 'none'",
   "frame-ancestors 'none'",
@@ -52,6 +52,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
     ],
   },
 }
