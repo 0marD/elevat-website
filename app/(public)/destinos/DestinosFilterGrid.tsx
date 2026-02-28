@@ -9,7 +9,7 @@ interface DestinosFilterGridProps {
   destinos: DestinoSerialized[]
 }
 
-const CATEGORIAS = ['Todos', 'Playa', 'Cultura', 'Lujo', 'Aventura', 'Romance', 'Gastronomía']
+const CATEGORIAS = ['Todos', 'Playa', 'Cultura', 'Lujo', 'Aventura', 'Romance', 'Gastronomía', 'Diversión', 'Descanso']
 
 export default function DestinosFilterGrid({ destinos }: DestinosFilterGridProps) {
   const [categoriaActiva, setCategoriaActiva] = useState('Todos')
