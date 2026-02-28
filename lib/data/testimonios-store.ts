@@ -49,6 +49,29 @@ export async function create(input: TestimonioInput): Promise<Testimonio> {
   })
 }
 
+/** Busca un testimonio por id. Devuelve null si no existe. */
+export async function getById(id: string): Promise<Testimonio | null> {
+  return prisma.testimonio.findUnique({ where: { id } })
+}
+
+/** Actualiza los campos editables de un testimonio. Devuelve null si no existe. */
+export async function update(id: string, input: TestimonioInput): Promise<Testimonio | null> {
+  try {
+    return await prisma.testimonio.update({
+      where: { id },
+      data: {
+        nombre:       input.nombre,
+        ciudad:       input.ciudad,
+        viaje:        input.viaje,
+        texto:        input.texto,
+        calificacion: input.calificacion,
+      },
+    })
+  } catch {
+    return null
+  }
+}
+
 /** Activa o desactiva la visibilidad de un testimonio. Devuelve null si no existe. */
 export async function setVisible(id: string, visible: boolean): Promise<Testimonio | null> {
   try {

@@ -1,13 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { setVisible, remove, serialize, getAll } from '@/lib/data/testimonios-store'
+import { setVisible, update, remove, serialize, getById } from '@/lib/data/testimonios-store'
+import { TestimonioSchema } from '@/lib/validations/testimonio'
 
 interface RouteContext {
   params: Promise<{ id: string }>
 }
 
-// PUT /api/testimonios/[id]   → actualizar visibilidad (requiere sesión)
+// GET /api/testimonios/[id]   → detalle (público)
+export async function GET(
+  _request: NextRequest,
+  { params }: RouteContext
+): Promise<NextResponse> {
+  const { id } = await params
+  const found = await getById(id)
+
+  if (!found) {
+    return NextResponse.json({ error: 'Testimonio no encontrado' }, { status: 404 })
+  }
+
+  return NextResponse.json(serialize(found))
+}
+
+// PUT /api/testimonios/[id]
+//   { visible: boolean }        → toggle visibilidad
+//   { nombre, ciudad, … }       → actualización completa de campos
 export async function PUT(
   request: NextRequest,
   { params }: RouteContext
@@ -26,20 +44,32 @@ export async function PUT(
     return NextResponse.json({ error: 'Body inválido' }, { status: 400 })
   }
 
-  if (typeof body !== 'object' || body === null || !('visible' in body)) {
-    return NextResponse.json({ error: 'Se requiere el campo "visible"' }, { status: 400 })
+  if (typeof body !== 'object' || body === null) {
+    return NextResponse.json({ error: 'Body inválido' }, { status: 400 })
   }
 
-  const { visible } = body as { visible: boolean }
-
-  if (typeof visible !== 'boolean') {
-    return NextResponse.json({ error: '"visible" debe ser un booleano' }, { status: 400 })
+  // Toggle de visibilidad: { visible: boolean }
+  if ('visible' in body && Object.keys(body).length === 1) {
+    const { visible } = body as { visible: boolean }
+    if (typeof visible !== 'boolean') {
+      return NextResponse.json({ error: '"visible" debe ser un booleano' }, { status: 400 })
+    }
+    const updated = await setVisible(id, visible)
+    if (!updated) return NextResponse.json({ error: 'Testimonio no encontrado' }, { status: 404 })
+    return NextResponse.json(serialize(updated))
   }
 
-  const updated = await setVisible(id, visible)
-  if (!updated) {
-    return NextResponse.json({ error: 'Testimonio no encontrado' }, { status: 404 })
+  // Actualización completa
+  const result = TestimonioSchema.safeParse(body)
+  if (!result.success) {
+    return NextResponse.json(
+      { error: 'Datos inválidos', issues: result.error.flatten().fieldErrors },
+      { status: 422 },
+    )
   }
+
+  const updated = await update(id, result.data)
+  if (!updated) return NextResponse.json({ error: 'Testimonio no encontrado' }, { status: 404 })
 
   return NextResponse.json(serialize(updated))
 }
@@ -62,20 +92,4 @@ export async function DELETE(
   }
 
   return NextResponse.json({ ok: true })
-}
-
-// GET /api/testimonios/[id]   → detalle (público)
-export async function GET(
-  _request: NextRequest,
-  { params }: RouteContext
-): Promise<NextResponse> {
-  const { id } = await params
-  const all = await getAll()
-  const found = all.find((t) => t.id === id)
-
-  if (!found) {
-    return NextResponse.json({ error: 'Testimonio no encontrado' }, { status: 404 })
-  }
-
-  return NextResponse.json(serialize(found))
 }

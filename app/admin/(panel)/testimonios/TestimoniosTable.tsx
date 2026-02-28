@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils/cn'
 import type { TestimonioSerialized } from '@/types/testimonio'
 import { ROUTES } from '@/lib/constants/routes'
 
+
 interface TestimoniosTableProps {
   testimonios: TestimonioSerialized[]
 }
@@ -134,6 +135,18 @@ function TestimonioRow({ testimonio: t, onMutate }: TestimonioRowProps) {
       {/* Acciones */}
       <td className="px-4 py-3">
         <div className="flex items-center gap-2 flex-wrap">
+
+          {/* Editar */}
+          <Link
+            href={ROUTES.admin.testimonioEditar(t.id)}
+            className={cn(
+              'text-[10px] tracking-widest uppercase px-3 py-1.5 border transition-colors duration-200',
+              'border-dorado/30 text-dorado/70 hover:text-dorado hover:border-dorado/60',
+              isPending && 'pointer-events-none opacity-40',
+            )}
+          >
+            Editar
+          </Link>
 
           {/* Toggle visible */}
           <ActionButton

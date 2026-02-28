@@ -28,11 +28,12 @@ Sitio web oficial de **ÉLEVA Viajes de Autor**, construido con Next.js, TypeScr
 | Framework | Next.js 15 (App Router, Turbopack) |
 | Lenguaje | TypeScript `strict: true` |
 | Estilos | Tailwind CSS 3 + clsx + tailwind-merge |
+| Animaciones | CSS keyframes (page animations) + Framer Motion (modales/banners) |
 | Base de datos | PostgreSQL (Supabase) vía Prisma 7 |
 | Auth | NextAuth v4 — Credentials provider, JWT |
 | Validación | Zod v4 |
 | Email | Resend |
-| Animaciones | Framer Motion |
+| Fuentes | next/font/google (Cormorant Garamond + Montserrat) |
 | PWA | @ducanh2912/next-pwa |
 | Push notifications | web-push (VAPID) |
 | Tests | Vitest + Testing Library |
@@ -45,20 +46,23 @@ Sitio web oficial de **ÉLEVA Viajes de Autor**, construido con Next.js, TypeScr
 ```
 elevate/
 ├── app/
-│   ├── layout.tsx                    # Layout raíz (html + body + SessionProvider)
-│   ├── globals.css                   # Variables CSS globales
+│   ├── layout.tsx                    # Layout raíz (html + body + SessionProvider + next/font)
+│   ├── globals.css                   # Variables CSS, animaciones (fadeIn, slideUp, fadeInUp)
+│   ├── favicon.ico                   # Favicon servido en /favicon.ico (Next.js App Router)
+│   ├── opengraph-image.tsx           # Imagen OG dinámica (edge, ImageResponse 1200×630)
 │   ├── sitemap.ts                    # Sitemap dinámico
 │   │
 │   ├── (public)/                     # Route group — páginas públicas con Navbar + Footer
 │   │   ├── layout.tsx                # Navbar + Footer + PWAInstallModal + PushNotificationBanner
-│   │   ├── page.tsx                  # Home /
+│   │   ├── page.tsx                  # Home / (server, carga destinos destacados de DB)
 │   │   ├── blog/
-│   │   │   ├── page.tsx              # Listado con filtro por categoría (client)
+│   │   │   ├── page.tsx              # Listado con filtro por categoría (server + client)
 │   │   │   └── [slug]/page.tsx       # Artículo completo (Markdown)
 │   │   ├── destinos/
-│   │   │   ├── page.tsx              # Catálogo con filtros
+│   │   │   ├── page.tsx              # Catálogo server (getActivos → DB)
+│   │   │   ├── DestinosFilterGrid.tsx# Filtro interactivo client component
 │   │   │   └── [slug]/page.tsx       # Detalle de destino
-│   │   ├── testimonios/page.tsx      # Testimonios de clientes
+│   │   ├── testimonios/page.tsx      # Testimonios de clientes (server, getVisible → DB)
 │   │   ├── cotizacion/page.tsx       # Formulario multi-step (3 pasos) con draft en localStorage
 │   │   └── contacto/page.tsx         # Contacto + FAQ con JSON-LD
 │   │
@@ -69,22 +73,32 @@ elevate/
 │   │       ├── page.tsx              # Dashboard con stats en tiempo real
 │   │       ├── blog/
 │   │       │   ├── page.tsx          # Tabla de posts
+│   │       │   ├── BlogTable.tsx     # Tabla con botones Editar / Publicar / Eliminar
+│   │       │   ├── BlogForm.tsx      # Formulario crear + editar (Markdown, tabs)
 │   │       │   ├── nuevo/page.tsx    # Crear post
 │   │       │   └── [id]/page.tsx     # Editar post
 │   │       ├── destinos/
 │   │       │   ├── page.tsx          # Tabla de destinos
-│   │       │   └── nuevo/page.tsx    # Crear destino
+│   │       │   ├── DestinosTable.tsx # Tabla con botones Editar / Activar / Eliminar
+│   │       │   ├── DestinoForm.tsx   # Formulario crear + editar
+│   │       │   ├── nuevo/page.tsx    # Crear destino
+│   │       │   └── [id]/page.tsx     # Editar destino
 │   │       ├── testimonios/
 │   │       │   ├── page.tsx          # Tabla de testimonios
-│   │       │   └── nuevo/page.tsx    # Crear testimonio
-│   │       └── cotizaciones/page.tsx # Bandeja de cotizaciones
+│   │       │   ├── TestimoniosTable.tsx # Tabla con botones Editar / Ocultar / Eliminar
+│   │       │   ├── nuevo/
+│   │       │   │   ├── page.tsx      # Crear testimonio
+│   │       │   │   └── TestimonioForm.tsx # Formulario crear + editar
+│   │       │   └── [id]/page.tsx     # Editar testimonio
+│   │       ├── cotizaciones/page.tsx # Bandeja de cotizaciones
+│   │       └── mensajes/page.tsx     # Bandeja de mensajes rápidos
 │   │
 │   ├── api/
 │   │   ├── auth/[...nextauth]/       # NextAuth
-│   │   ├── blog/                     # GET, POST / GET, PUT, DELETE [id]
-│   │   ├── destinos/                 # GET, POST / GET, PUT, DELETE [id]
-│   │   ├── testimonios/              # GET, POST / GET, PUT, DELETE [id]
-│   │   ├── cotizacion/               # POST / PATCH, DELETE [id]
+│   │   ├── blog/                     # GET, POST / GET, PUT (toggle | full update), DELETE [id]
+│   │   ├── destinos/                 # GET, POST / GET, PUT (toggle | full update), DELETE [id]
+│   │   ├── testimonios/              # GET, POST / GET, PUT (toggle | full update), DELETE [id]
+│   │   ├── cotizacion/               # POST (crea + email + push) / PATCH, DELETE [id]
 │   │   └── push/
 │   │       └── subscribe/            # POST (suscribir), DELETE (desuscribir)
 │   │
@@ -93,23 +107,18 @@ elevate/
 │       │   ├── Navbar.tsx
 │       │   └── Footer.tsx
 │       ├── ui/                       # Componentes atómicos reutilizables
-│       │   ├── Button.tsx            # Variantes: gold, ghost, danger
+│       │   ├── Button.tsx
 │       │   ├── Input.tsx
 │       │   ├── Textarea.tsx
 │       │   ├── Card.tsx
 │       │   ├── GoldLine.tsx
 │       │   ├── SectionLabel.tsx
-│       │   ├── PWAInstallModal.tsx   # Prompt de instalación PWA
-│       │   └── PushNotificationBanner.tsx  # Banner de suscripción a push
+│       │   ├── PWAInstallModal.tsx   # Prompt de instalación PWA (Framer Motion)
+│       │   └── PushNotificationBanner.tsx  # Banner push (solo en PWA standalone)
 │       ├── seo/
 │       │   └── JsonLd.tsx            # JSON-LD genérico (TravelAgency, Article, FAQPage)
 │       └── admin/
-│           ├── Sidebar.tsx
-│           ├── BlogTable.tsx + BlogForm.tsx
-│           ├── DestinosTable.tsx + DestinoForm.tsx
-│           ├── TestimoniosTable.tsx + TestimonioForm.tsx
-│           ├── CotizacionesTable.tsx
-│           └── BlogFilterGrid.tsx
+│           └── Sidebar.tsx
 │
 ├── lib/
 │   ├── auth.ts                       # NextAuthOptions
@@ -117,7 +126,7 @@ elevate/
 │   ├── data/
 │   │   ├── blog-store.ts             # CRUD BlogPost (Prisma)
 │   │   ├── destinos-store.ts         # CRUD Destino (Prisma)
-│   │   ├── testimonios-store.ts      # CRUD Testimonio (Prisma)
+│   │   ├── testimonios-store.ts      # CRUD Testimonio + getById + update (Prisma)
 │   │   ├── cotizaciones-store.ts     # CRUD Cotizacion (Prisma)
 │   │   └── push-store.ts             # CRUD PushSubscription (Prisma)
 │   ├── push/
@@ -135,7 +144,8 @@ elevate/
 │   │   ├── format.ts                 # readingTime(), formatDate()
 │   │   └── slugify.ts
 │   └── constants/
-│       └── routes.ts                 # ROUTES tipadas
+│       ├── routes.ts                 # ROUTES tipadas (incluye blogEditar, destinoEditar, testimonioEditar)
+│       └── brand.ts                  # Colores, fuentes, contacto
 │
 ├── types/
 │   ├── blog.ts                       # BlogPost, BlogPostSerialized
@@ -157,9 +167,10 @@ elevate/
 │
 ├── public/
 │   ├── manifest.json                 # Web App Manifest
-│   ├── icons/                        # icon-192.svg, icon-512.svg
-│   ├── robots.txt
-│   └── llms.txt                      # Descripción para crawlers de IA
+│   ├── favicon/                      # favicon.ico, PNG 16/32/192/512, apple-touch-icon
+│   ├── icons/                        # Iconos SVG para PWA
+│   ├── robots.txt                    # Permite crawlers de IA
+│   └── llms.txt                      # Descripción del negocio para crawlers de IA
 │
 ├── tests/
 │   ├── api/                          # Tests de Route Handlers
@@ -171,7 +182,7 @@ elevate/
 ├── middleware.ts                     # Protege /admin/:path*, permite /admin/login
 ├── .env.example
 ├── next.config.js                    # PWA + CSP headers
-├── tailwind.config.js                # Tokens de marca
+├── tailwind.config.js                # Tokens de marca (colores, fuentes con CSS vars)
 ├── tsconfig.json
 └── vitest.config.ts
 ```
@@ -211,7 +222,6 @@ yarn dev
 ```env
 # Base de datos (Supabase PostgreSQL)
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?pgbouncer=true
-DIRECT_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
 
 # Autenticación admin
 NEXTAUTH_SECRET=          # openssl rand -base64 32
@@ -230,7 +240,7 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=523337084290
 # Generar con: yarn generate-vapid
 NEXT_PUBLIC_VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
-VAPID_SUBJECT=mailto:admin@eleva.mx
+VAPID_SUBJECT=mailto:hola@elevaviajes.shop
 ```
 
 ---
@@ -243,7 +253,7 @@ El proyecto usa **PostgreSQL en Supabase** con **Prisma 7** como ORM.
 
 | Tabla | Modelo | Descripción |
 |-------|--------|-------------|
-| `blog_posts` | `BlogPost` | Artículos con slug, Markdown, publicado/borrador |
+| `blog_posts` | `BlogPost` | Artículos con slug, contenido Markdown, publicado/borrador |
 | `destinos` | `Destino` | Destinos con slug, etiquetas, activo/inactivo |
 | `testimonios` | `Testimonio` | Testimonios con calificación y visibilidad |
 | `cotizaciones` | `Cotizacion` | Solicitudes del formulario multi-step |
@@ -275,27 +285,31 @@ Accesible en `/admin/login`. Credenciales configuradas en `.env.local` (`ADMIN_E
 ### Funcionalidades
 
 **Blog** — `/admin/blog`
-- Crear y editar artículos con editor Markdown (tabs Escribir/Vista previa)
+- Crear, editar y eliminar artículos con editor Markdown (tabs Escribir/Vista previa)
 - Publicar directamente o guardar como borrador
 - Al publicar → se envía push notification a todos los suscriptores
 
 **Destinos** — `/admin/destinos`
-- Crear destinos con imagen, descripción, país, tipo y etiquetas
+- Crear, editar y eliminar destinos con imagen, descripción, país, tipo y etiquetas
 - Activar/desactivar del catálogo público
 - Al crear o reactivar → se envía push notification
 
 **Testimonios** — `/admin/testimonios`
-- Agregar testimonios con nombre, ciudad, viaje, texto y calificación (1–5)
-- Activar/desactivar visibilidad
+- Crear, editar y eliminar testimonios con nombre, ciudad, viaje, texto y calificación (1–5)
+- Mostrar/ocultar visibilidad pública
 - Al crear → se envía push notification
 
 **Cotizaciones** — `/admin/cotizaciones`
 - Bandeja con todas las solicitudes recibidas
+- Al llegar una nueva cotización → se envía push notification al admin
 - Marcar como atendida/pendiente
-- Ver detalle expandido de cada cotización
+- Ver detalle expandido de cada solicitud
+
+**Mensajes** — `/admin/mensajes`
+- Bandeja de mensajes enviados desde el formulario rápido de contacto
 
 **Dashboard** — `/admin`
-- Contadores en tiempo real: posts publicados, destinos activos, testimonios, cotizaciones pendientes
+- Contadores en tiempo real: posts publicados, destinos activos, testimonios visibles, cotizaciones pendientes
 
 ---
 
@@ -310,7 +324,7 @@ La aplicación es una **Progressive Web App** instalable en dispositivos móvile
 2. Después de 3s aparece el PushNotificationBanner
 3. Usuario acepta → el navegador solicita permiso
 4. La suscripción (endpoint + claves) se guarda en push_subscriptions
-5. Admin publica contenido → API dispara sendPushToAll()
+5. Admin publica contenido / llega una cotización → API dispara sendPushToAll()
 6. El service worker (worker/index.ts) muestra la notificación
 7. Click en la notificación → abre la URL del contenido
 ```
@@ -324,6 +338,7 @@ La aplicación es una **Progressive Web App** instalable en dispositivos móvile
 | Crear destino | "Nuevo destino en ÉLEVA." | Siempre |
 | Reactivar destino | "Nuevo destino en ÉLEVA." | Toggle `activo → true` |
 | Crear testimonio | "Nueva experiencia compartida." | Siempre |
+| Nueva cotización | "Nueva cotización" | Siempre, al recibir solicitud |
 
 ### Generar claves VAPID
 
@@ -340,11 +355,14 @@ Copiar los valores en `.env.local` y en las variables de entorno de Vercel.
 
 ## SEO
 
-- **Metadata** completa en todas las páginas públicas (title, description, canonical, Open Graph, Twitter Cards)
-- **JSON-LD** estructurado en home (TravelAgency), blog/[slug] (Article), contacto (FAQPage)
-- **Sitemap dinámico** en `/sitemap.xml` — incluye rutas estáticas + posts publicados
-- **robots.txt** — permite crawlers de IA (GPTBot, ClaudeBot, PerplexityBot)
+- **Metadata** completa en todas las páginas públicas: title, description, keywords, canonical, Open Graph, Twitter Cards, `locale: es_MX`
+- **Imagen OG dinámica** generada server-side en `/opengraph-image` con `ImageResponse` (edge runtime, 1200×630 px)
+- **JSON-LD** estructurado en home (TravelAgency con address y openingHours), blog/[slug] (Article), contacto (FAQPage)
+- **Sitemap dinámico** en `/sitemap.xml` — rutas estáticas + posts publicados
+- **robots.txt** — permite crawlers de IA (GPTBot, ClaudeBot, PerplexityBot, Googlebot, Bingbot)
 - **llms.txt** — descripción del negocio para crawlers de IA
+- **Favicon** servido desde `app/favicon.ico` + metadata `icons` apuntando a `/favicon/*.png`
+- **Fuentes** cargadas con `next/font/google` (sin `@import` bloqueante, mejora Core Web Vitals)
 
 ---
 
@@ -357,8 +375,6 @@ yarn test
 # Con cobertura
 yarn test:coverage
 ```
-
-**197 tests** distribuidos en 22 archivos:
 
 | Directorio | Qué cubre |
 |------------|-----------|
@@ -387,10 +403,11 @@ Configurar en **Settings → Environment Variables** del proyecto:
 ```
 DATABASE_URL
 NEXTAUTH_SECRET
-NEXTAUTH_URL          → https://tudominio.mx
+NEXTAUTH_URL          → https://elevaviajes.shop
 ADMIN_EMAIL
 ADMIN_PASSWORD
 RESEND_API_KEY
+RESEND_FROM
 NEXT_PUBLIC_WHATSAPP_NUMBER
 NEXT_PUBLIC_VAPID_PUBLIC_KEY
 VAPID_PRIVATE_KEY
@@ -417,14 +434,15 @@ VAPID_SUBJECT
 
 ## Tipografía
 
-- **Display / Títulos:** Cormorant Garamond Light 300 (Google Fonts)
-- **Cuerpo / UI:** Montserrat Light 300 & Regular 400 (Google Fonts)
+- **Display / Títulos:** Cormorant Garamond — pesos 300, 400, 600 (normal + italic)
+- **Cuerpo / UI:** Montserrat — pesos 300, 400, 500, 600
+- Cargadas con `next/font/google` y expuestas como variables CSS `--font-cormorant` / `--font-montserrat`
 
 ---
 
 ## Contacto del proyecto
 
 - **WhatsApp:** +52 33 3708 4290
-- **Email:** hola@elevaviajes.mx
+- **Email:** hola@elevaviajes.shop
 - **Instagram:** @elevaviajes
-- **Web:** elevaviajes.mx
+- **Web:** [elevaviajes.shop](https://elevaviajes.shop)

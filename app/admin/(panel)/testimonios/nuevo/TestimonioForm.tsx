@@ -8,36 +8,48 @@ import Textarea from '@/app/components/ui/Textarea'
 import Button from '@/app/components/ui/Button'
 import { TestimonioSchema, type TestimonioFieldErrors } from '@/lib/validations/testimonio'
 import { ROUTES } from '@/lib/constants/routes'
+import type { TestimonioSerialized } from '@/types/testimonio'
 
 // ─── Estado del formulario ───────────────────────────────────────────────────
 
 interface FormState {
-  nombre:      string
-  ciudad:      string
-  viaje:       string
-  texto:       string
+  nombre:       string
+  ciudad:       string
+  viaje:        string
+  texto:        string
   calificacion: number
 }
 
-const INITIAL_STATE: FormState = {
-  nombre:      '',
-  ciudad:      '',
-  viaje:       '',
-  texto:       '',
-  calificacion: 5,
+function buildInitialState(initialData?: TestimonioSerialized): FormState {
+  if (initialData) {
+    return {
+      nombre:       initialData.nombre,
+      ciudad:       initialData.ciudad,
+      viaje:        initialData.viaje,
+      texto:        initialData.texto,
+      calificacion: initialData.calificacion,
+    }
+  }
+  return { nombre: '', ciudad: '', viaje: '', texto: '', calificacion: 5 }
+}
+
+// ─── Props ───────────────────────────────────────────────────────────────────
+
+interface TestimonioFormProps {
+  initialData?: TestimonioSerialized
 }
 
 // ─── Componente principal ────────────────────────────────────────────────────
 
-export default function TestimonioForm() {
-  const router = useRouter()
+export default function TestimonioForm({ initialData }: TestimonioFormProps) {
+  const router     = useRouter()
+  const isEditing  = Boolean(initialData)
 
-  const [form, setForm]     = useState<FormState>(INITIAL_STATE)
-  const [errors, setErrors] = useState<TestimonioFieldErrors>({})
+  const [form, setForm]         = useState<FormState>(() => buildInitialState(initialData))
+  const [errors, setErrors]     = useState<TestimonioFieldErrors>({})
   const [apiError, setApiError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Actualiza un campo y limpia su error
   const setField = <K extends keyof FormState>(field: K, value: FormState[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }))
     setErrors((prev) => ({ ...prev, [field]: undefined }))
@@ -47,7 +59,6 @@ export default function TestimonioForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Validación client-side con Zod
     const result = TestimonioSchema.safeParse(form)
     if (!result.success) {
       const fieldErrors: TestimonioFieldErrors = {}
@@ -62,8 +73,11 @@ export default function TestimonioForm() {
     setIsLoading(true)
     setApiError(null)
 
-    const response = await fetch('/api/testimonios', {
-      method:  'POST',
+    const url    = isEditing ? `/api/testimonios/${initialData!.id}` : '/api/testimonios'
+    const method = isEditing ? 'PUT' : 'POST'
+
+    const response = await fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(result.data),
     })
@@ -76,7 +90,6 @@ export default function TestimonioForm() {
       return
     }
 
-    // Redirige a la lista y refresca los datos del server component
     router.push(ROUTES.admin.testimonios)
     router.refresh()
   }
@@ -85,7 +98,7 @@ export default function TestimonioForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      aria-label="Formulario para agregar testimonio"
+      aria-label={isEditing ? 'Formulario para editar testimonio' : 'Formulario para agregar testimonio'}
       className="space-y-6 max-w-xl"
     >
       <Input
@@ -134,7 +147,6 @@ export default function TestimonioForm() {
         disabled={isLoading}
       />
 
-      {/* Selector de estrellas accesible ─────────────────── */}
       <StarSelector
         value={form.calificacion}
         onChange={(v) => setField('calificacion', v)}
@@ -142,17 +154,15 @@ export default function TestimonioForm() {
         disabled={isLoading}
       />
 
-      {/* Error global de la API ───────────────────────────── */}
       {apiError && (
         <p role="alert" className="text-sm text-red-400 tracking-wide">
           {apiError}
         </p>
       )}
 
-      {/* Acciones ────────────────────────────────────────── */}
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" variant="solid" isLoading={isLoading}>
-          Publicar testimonio
+          {isEditing ? 'Guardar cambios' : 'Publicar testimonio'}
         </Button>
         <Button
           type="button"
@@ -170,9 +180,9 @@ export default function TestimonioForm() {
 // ─── Selector de estrellas accesible ────────────────────────────────────────
 
 interface StarSelectorProps {
-  value:    number
-  onChange: (v: number) => void
-  error?:   string
+  value:     number
+  onChange:  (v: number) => void
+  error?:    string
   disabled?: boolean
 }
 
