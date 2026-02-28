@@ -16,8 +16,8 @@ module.exports = {
         plata:  '#8a8a8a',
       },
       fontFamily: {
-        serif:  ['Cormorant Garamond', 'Georgia', 'serif'],
-        sans:   ['Montserrat', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        serif:  ['var(--font-cormorant)', 'Cormorant Garamond', 'Georgia', 'serif'],
+        sans:   ['var(--font-montserrat)', 'Montserrat', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
         widest2: '0.3em',

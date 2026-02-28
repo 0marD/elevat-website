@@ -1,6 +1,22 @@
 import type { Metadata, Viewport } from 'next'
+import { Cormorant_Garamond, Montserrat } from 'next/font/google'
 import './globals.css'
 import SessionProvider from './components/providers/SessionProvider'
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-montserrat',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'ÉLEVA. — Viajes de Autor',
@@ -38,7 +54,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning className={`${cormorant.variable} ${montserrat.variable}`}>
       <body>
         <SessionProvider>
           {children}
