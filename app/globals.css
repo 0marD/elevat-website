@@ -52,6 +52,46 @@ body::before {
   opacity: 0.35;
 }
 
+/* ── Animaciones ─────────────────────────────────────────────────────────────
+   Sutiles y respetuosas de prefers-reduced-motion (ya cubierto arriba).
+   ───────────────────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out both;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out both;
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+  /* Staggered variants */
+  .animate-delay-100 { animation-delay: 0.1s; }
+  .animate-delay-200 { animation-delay: 0.2s; }
+  .animate-delay-300 { animation-delay: 0.3s; }
+  .animate-delay-400 { animation-delay: 0.4s; }
+}
+
 @layer components {
   .gold-line {
     @apply block w-14 h-px bg-gradient-to-r from-transparent via-dorado to-transparent;

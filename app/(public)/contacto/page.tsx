@@ -6,11 +6,11 @@ import JsonLd from '@/app/components/seo/JsonLd'
 export const metadata: Metadata = {
   title: 'Contacto — ÉLEVA. Viajes de Autor',
   description: 'Escríbenos por WhatsApp, email o Instagram. Respondemos en menos de 4 horas en días hábiles.',
-  alternates: { canonical: 'https://elevaviajes.mx/contacto' },
+  alternates: { canonical: 'https://elevaviajes.shop/contacto' },
   openGraph: {
     title: 'Contacto — ÉLEVA.',
     description: 'Escríbenos y empieza a planear tu viaje ideal.',
-    url: 'https://elevaviajes.mx/contacto',
+    url: 'https://elevaviajes.shop/contacto',
   },
   twitter: {
     card: 'summary_large_image',
@@ -107,7 +107,7 @@ export default function ContactoPage() {
               </a>
 
               <a
-                href="mailto:hola@elevaviajes.mx"
+                href="mailto:hola@elevaviajes.shop"
                 className="flex items-center gap-5 card-dark p-5 group"
               >
                 <div className="w-10 h-10 border border-dorado/30 flex items-center justify-center text-dorado flex-shrink-0">
@@ -116,7 +116,7 @@ export default function ContactoPage() {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-crema text-sm group-hover:text-dorado transition-colors">hola@elevaviajes.mx</div>
+                  <div className="text-crema text-sm group-hover:text-dorado transition-colors">hola@elevaviajes.shop</div>
                   <div className="text-plata/40 mt-0.5" style={{ fontSize: '9px', letterSpacing: '3px' }}>RESPUESTA EN 4 HORAS</div>
                 </div>
                 <span className="ml-auto text-dorado/40 group-hover:text-dorado transition-colors text-lg">→</span>

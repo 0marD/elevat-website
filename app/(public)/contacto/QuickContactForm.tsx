@@ -7,27 +7,7 @@ interface Fields {
   mensaje:  string
 }
 
-interface FieldErrors {
-  nombre?:   string
-  contacto?: string
-  mensaje?:  string
-}
-
-const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '523337084290'
-
-function isValidContacto(value: string): boolean {
-  const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  const phone = /^(\+?52)?[1-9]\d{9}$|^\d{10}$/
-  return email.test(value) || phone.test(value)
-}
-
-function validate(fields: Fields): FieldErrors {
-  const errs: FieldErrors = {}
-  if (fields.nombre.trim().length < 2)        errs.nombre   = 'Ingresa tu nombre.'
-  if (!isValidContacto(fields.contacto.trim())) errs.contacto = 'Ingresa un correo válido (juan@email.com) o número de WhatsApp (3337084290).'
-  if (fields.mensaje.trim().length < 5)        errs.mensaje  = 'Escribe un mensaje más detallado.'
-  return errs
-}
+type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const baseInput = 'w-full bg-transparent border outline-none px-5 py-4 text-crema text-sm transition-colors placeholder:text-plata/30'
 const fieldClass = (hasError: boolean) =>
@@ -35,20 +15,62 @@ const fieldClass = (hasError: boolean) =>
 
 export default function QuickContactForm() {
   const [fields, setFields] = useState<Fields>({ nombre: '', contacto: '', mensaje: '' })
-  const [errors, setErrors] = useState<FieldErrors>({})
+  const [fieldErrors, setFieldErrors] = useState<Partial<Fields>>({})
+  const [status, setStatus] = useState<Status>('idle')
 
   const update = (field: keyof Fields, value: string) => {
     setFields(prev => ({ ...prev, [field]: value }))
-    if (field in errors) setErrors(prev => ({ ...prev, [field]: undefined }))
+    if (field in fieldErrors) setFieldErrors(prev => ({ ...prev, [field]: undefined }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const errs = validate(fields)
-    if (Object.keys(errs).length > 0) { setErrors(errs); return }
+    setStatus('loading')
+    setFieldErrors({})
 
-    const text = `Hola, soy ${fields.nombre.trim()}. Mi contacto: ${fields.contacto.trim()}. ${fields.mensaje.trim()}`
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
+    const res = await fetch('/api/contacto', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fields),
+    })
+
+    if (res.status === 422) {
+      const data = (await res.json()) as { errors: Partial<Fields> }
+      setFieldErrors(data.errors)
+      setStatus('idle')
+      return
+    }
+
+    if (!res.ok) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('success')
+    setFields({ nombre: '', contacto: '', mensaje: '' })
+  }
+
+  if (status === 'success') {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="border border-dorado/20 px-8 py-10 text-center space-y-3"
+      >
+        <p className="text-dorado text-lg font-serif tracking-wide">Mensaje recibido</p>
+        <p className="text-plata text-sm">
+          Nos pondremos en contacto contigo pronto a través de{' '}
+          <span className="text-crema">{fields.contacto || 'tu contacto'}</span>.
+        </p>
+        <button
+          type="button"
+          onClick={() => setStatus('idle')}
+          className="mt-4 text-xs text-plata/60 underline underline-offset-4 hover:text-dorado transition-colors"
+        >
+          Enviar otro mensaje
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -62,13 +84,13 @@ export default function QuickContactForm() {
           onChange={e => update('nombre', e.target.value)}
           placeholder="Tu nombre"
           aria-required="true"
-          aria-invalid={!!errors.nombre}
-          aria-describedby={errors.nombre ? 'err-qc-nombre' : undefined}
-          className={fieldClass(!!errors.nombre)}
+          aria-invalid={!!fieldErrors.nombre}
+          aria-describedby={fieldErrors.nombre ? 'err-qc-nombre' : undefined}
+          className={fieldClass(!!fieldErrors.nombre)}
         />
-        {errors.nombre && (
+        {fieldErrors.nombre && (
           <p id="err-qc-nombre" role="alert" className="mt-1 text-xs text-red-400 tracking-wide">
-            {errors.nombre}
+            {fieldErrors.nombre}
           </p>
         )}
       </div>
@@ -82,13 +104,13 @@ export default function QuickContactForm() {
           onChange={e => update('contacto', e.target.value)}
           placeholder="Para responderte"
           aria-required="true"
-          aria-invalid={!!errors.contacto}
-          aria-describedby={errors.contacto ? 'err-qc-contacto' : undefined}
-          className={fieldClass(!!errors.contacto)}
+          aria-invalid={!!fieldErrors.contacto}
+          aria-describedby={fieldErrors.contacto ? 'err-qc-contacto' : undefined}
+          className={fieldClass(!!fieldErrors.contacto)}
         />
-        {errors.contacto && (
+        {fieldErrors.contacto && (
           <p id="err-qc-contacto" role="alert" className="mt-1 text-xs text-red-400 tracking-wide">
-            {errors.contacto}
+            {fieldErrors.contacto}
           </p>
         )}
       </div>
@@ -102,18 +124,31 @@ export default function QuickContactForm() {
           onChange={e => update('mensaje', e.target.value)}
           placeholder="Cuéntanos qué tienes en mente…"
           aria-required="true"
-          aria-invalid={!!errors.mensaje}
-          aria-describedby={errors.mensaje ? 'err-qc-mensaje' : undefined}
-          className={`${fieldClass(!!errors.mensaje)} resize-none`}
+          aria-invalid={!!fieldErrors.mensaje}
+          aria-describedby={fieldErrors.mensaje ? 'err-qc-mensaje' : undefined}
+          className={`${fieldClass(!!fieldErrors.mensaje)} resize-none`}
         />
-        {errors.mensaje && (
+        {fieldErrors.mensaje && (
           <p id="err-qc-mensaje" role="alert" className="mt-1 text-xs text-red-400 tracking-wide">
-            {errors.mensaje}
+            {fieldErrors.mensaje}
           </p>
         )}
       </div>
 
-      <button type="submit" className="btn-gold w-full">Enviar por WhatsApp</button>
+      {status === 'error' && (
+        <p role="alert" className="text-xs text-red-400 tracking-wide">
+          Ocurrió un error al enviar el mensaje. Inténtalo de nuevo.
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        aria-busy={status === 'loading'}
+        className="btn-gold w-full disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {status === 'loading' ? 'Enviando…' : 'Enviar mensaje'}
+      </button>
     </form>
   )
 }

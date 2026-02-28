@@ -3,8 +3,15 @@ import { getPublished, serialize } from '@/lib/data/blog-store'
 import BlogFilterGrid from './BlogFilterGrid'
 
 export const metadata: Metadata = {
-  title: 'Blog — ÉLEVA. Viajes de Autor',
-  description: 'Guías de destino, consejos de viaje y contenido exclusivo del equipo de ÉLEVA.',
+  title: 'Blog de Viajes — ÉLEVA. Guías, Consejos y Destinos',
+  description: 'Guías de destino, consejos de viaje y contenido exclusivo del equipo de ÉLEVA. Aprende a viajar mejor con nuestros artículos.',
+  alternates: { canonical: 'https://elevaviajes.shop/blog' },
+  openGraph: {
+    title: 'Blog de Viajes — ÉLEVA.',
+    description: 'Guías de destino, consejos y contenido exclusivo para viajeros.',
+    url: 'https://elevaviajes.shop/blog',
+    locale: 'es_MX',
+  },
 }
 
 export const dynamic = 'force-dynamic'

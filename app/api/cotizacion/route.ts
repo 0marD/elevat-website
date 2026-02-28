@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { CotizacionSchema } from '@/lib/validations/cotizacion'
 import { create, serialize } from '@/lib/data/cotizaciones-store'
 import { cotizacionEmailHtml, cotizacionEmailSubject } from '@/lib/email/cotizacion-template'
+import { sendPushToAll } from '@/lib/push/send'
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '523337084290'
 
@@ -39,6 +40,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       console.error('[cotizacion] Error al enviar email:', err)
     })
   }
+
+  sendPushToAll({
+    title: '📋 Nueva cotización',
+    body:  `${cotizacion.nombre} → ${cotizacion.destino}`,
+    url:   '/admin/cotizaciones',
+  }).catch((err: unknown) => {
+    console.error('[cotizacion] Error al enviar push:', err)
+  })
 
   return NextResponse.json(
     {

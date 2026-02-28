@@ -21,11 +21,11 @@ export async function generateMetadata({ params }: BlogArticuloParams): Promise<
   return {
     title:       `${post.titulo} — ÉLEVA. Viajes de Autor`,
     description: post.extracto,
-    alternates:  { canonical: `https://elevaviajes.mx/blog/${slug}` },
+    alternates:  { canonical: `https://elevaviajes.shop/blog/${slug}` },
     openGraph: {
       title:       post.titulo,
       description: post.extracto,
-      url:         `https://elevaviajes.mx/blog/${slug}`,
+      url:         `https://elevaviajes.shop/blog/${slug}`,
       type:        'article',
       images:      post.imagenPortada ? [{ url: post.imagenPortada }] : [],
     },
@@ -57,17 +57,17 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
     author: {
       '@type': 'Organization',
       name: 'ÉLEVA.',
-      url: 'https://elevaviajes.mx',
+      url: 'https://elevaviajes.shop',
     },
     publisher: {
       '@type': 'Organization',
       name: 'ÉLEVA.',
-      url: 'https://elevaviajes.mx',
-      logo: { '@type': 'ImageObject', url: 'https://elevaviajes.mx/icons/icon-512.svg' },
+      url: 'https://elevaviajes.shop',
+      logo: { '@type': 'ImageObject', url: 'https://elevaviajes.shop/icons/icon-512.svg' },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://elevaviajes.mx/blog/${post.slug}`,
+      '@id': `https://elevaviajes.shop/blog/${post.slug}`,
     },
   }
 

@@ -17,5 +17,6 @@ export const ROUTES = {
     destinos: '/admin/destinos',
     destinoNuevo: '/admin/destinos/nuevo',
     cotizaciones: '/admin/cotizaciones',
+    mensajes: '/admin/mensajes',
   },
 } as const

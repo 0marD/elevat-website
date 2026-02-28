@@ -4,8 +4,15 @@ import { getVisible } from '@/lib/data/testimonios-store'
 import type { Testimonio } from '@/types/testimonio'
 
 export const metadata: Metadata = {
-  title: 'Testimonios — ÉLEVA. Viajes de Autor',
-  description: 'Lo que dicen nuestros viajeros sobre sus experiencias con ÉLEVA.',
+  title: 'Testimonios — ÉLEVA. Lo que dicen nuestros viajeros',
+  description: 'Lee las experiencias reales de nuestros clientes. Más de 100% de satisfacción en viajes diseñados a medida por ÉLEVA en México y el mundo.',
+  alternates: { canonical: 'https://elevaviajes.shop/testimonios' },
+  openGraph: {
+    title: 'Testimonios — ÉLEVA. Viajes de Autor',
+    description: 'Experiencias reales de viajeros que confiaron en ÉLEVA.',
+    url: 'https://elevaviajes.shop/testimonios',
+    locale: 'es_MX',
+  },
 }
 
 // Siempre fresco: lee del JSON en cada request para reflejar cambios del admin

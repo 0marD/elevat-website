@@ -72,6 +72,17 @@ model Destino {
   @@map("destinos")
 }
 
+model MensajeRapido {
+  id        String   @id @default(uuid())
+  nombre    String
+  contacto  String
+  mensaje   String
+  leido     Boolean  @default(false)
+  creadoEn  DateTime @default(now())
+
+  @@map("mensajes_rapidos")
+}
+
 model PushSubscription {
   id        String   @id @default(uuid())
   endpoint  String   @unique

@@ -14,5 +14,5 @@ export const BRAND_FONTS = {
 } as const
 
 export const WHATSAPP_NUMBER = '523337084290'
-export const CONTACT_EMAIL = 'hola@elevaviajes.mx'
+export const CONTACT_EMAIL = 'hola@elevaviajes.shop'
 export const INSTAGRAM_HANDLE = '@elevaviajes'

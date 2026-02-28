@@ -55,8 +55,8 @@ export default function Footer() {
               >
                 <span className="text-dorado">↗</span> WhatsApp
               </a>
-              <a href="mailto:hola@elevaviajes.mx" className="flex items-center gap-3 text-xs text-plata hover:text-dorado transition-colors tracking-wider">
-                <span className="text-dorado">↗</span> hola@elevaviajes.mx
+              <a href="mailto:hola@elevaviajes.shop" className="flex items-center gap-3 text-xs text-plata hover:text-dorado transition-colors tracking-wider">
+                <span className="text-dorado">↗</span> hola@elevaviajes.shop
               </a>
               <a href="https://instagram.com/elevaviajes" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-xs text-plata hover:text-dorado transition-colors tracking-wider">
                 <span className="text-dorado">↗</span> @elevaviajes

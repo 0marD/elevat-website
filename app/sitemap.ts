@@ -3,7 +3,7 @@ import { getPublished } from '@/lib/data/blog-store'
 
 export const dynamic = 'force-dynamic'
 
-const BASE_URL = 'https://elevaviajes.mx'
+const BASE_URL = 'https://elevaviajes.shop'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPublished()

@@ -52,6 +52,12 @@ const IconCotizaciones = () => (
   </svg>
 )
 
+const IconMensajes = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4" aria-hidden="true">
+    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+)
+
 const IconLogout = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4" aria-hidden="true">
     <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -78,6 +84,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: ROUTES.admin.testimonios,  label: 'Testimonios',   icon: <IconTestimonios /> },
   { href: ROUTES.admin.destinos,     label: 'Destinos',      icon: <IconDestinos /> },
   { href: ROUTES.admin.cotizaciones, label: 'Cotizaciones',  icon: <IconCotizaciones /> },
+  { href: ROUTES.admin.mensajes,     label: 'Mensajes',      icon: <IconMensajes /> },
 ]
 
 // ─── Componente ─────────────────────────────────────────────────────────────
