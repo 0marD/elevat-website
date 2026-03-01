@@ -74,7 +74,7 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
   return (
     <div className="min-h-screen pt-32 pb-24">
       <JsonLd data={articleJsonLd} />
-      <div className="max-w-3xl mx-auto px-6 md:px-12">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Breadcrumb ─────────────────────────────────────── */}
         <nav aria-label="Ruta de navegación" className="flex items-center gap-2 mb-12 text-[10px] tracking-widest uppercase">
@@ -103,7 +103,7 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
 
           <p
             className="text-plata/70 leading-loose mb-8"
-            style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '20px', fontStyle: 'italic' }}
+            style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(17px, 2.5vw, 20px)', fontStyle: 'italic' }}
           >
             {post.extracto}
           </p>
@@ -157,7 +157,7 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
               ),
               p: ({ children }) => (
                 <p
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '19px', fontWeight: 300 }}
+                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(16px, 2.5vw, 19px)', fontWeight: 300 }}
                   className="text-plata/80 leading-loose mb-6"
                 >
                   {children}
@@ -170,18 +170,18 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
                 <em className="text-crema/80 italic">{children}</em>
               ),
               ul: ({ children }) => (
-                <ul className="list-disc list-outside text-plata/80 space-y-2 mb-6 ml-6">
+                <ul className="list-disc list-outside text-plata/80 space-y-2 mb-6 ml-4 sm:ml-6">
                   {children}
                 </ul>
               ),
               ol: ({ children }) => (
-                <ol className="list-decimal list-outside text-plata/80 space-y-2 mb-6 ml-6">
+                <ol className="list-decimal list-outside text-plata/80 space-y-2 mb-6 ml-4 sm:ml-6">
                   {children}
                 </ol>
               ),
               li: ({ children }) => (
                 <li
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '18px', fontWeight: 300 }}
+                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: 300 }}
                 >
                   {children}
                 </li>
@@ -205,7 +205,7 @@ export default async function BlogArticuloPage({ params }: BlogArticuloParams) {
                 </code>
               ),
               pre: ({ children }) => (
-                <pre className="bg-negro/60 p-6 overflow-x-auto mb-6 text-sm">
+                <pre className="bg-negro/60 p-3 sm:p-6 overflow-x-auto mb-6 text-sm">
                   {children}
                 </pre>
               ),

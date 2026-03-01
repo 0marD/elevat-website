@@ -70,10 +70,10 @@ function validateStep2(form: FormData): FormErrors {
 }
 
 const inputClass = (hasError: boolean) =>
-  `w-full bg-transparent border ${hasError ? 'border-red-400' : 'border-dorado/20 focus:border-dorado/60'} outline-none px-5 py-4 text-crema text-sm transition-colors duration-300 placeholder:text-plata/30`
+  `w-full bg-transparent border ${hasError ? 'border-red-400' : 'border-dorado/20 focus:border-dorado/60'} outline-none px-4 py-3 sm:px-5 sm:py-4 text-crema text-sm transition-colors duration-300 placeholder:text-plata/30`
 
 const selectClass = (hasError: boolean) =>
-  `w-full bg-negro border ${hasError ? 'border-red-400' : 'border-dorado/20 focus:border-dorado/60'} outline-none px-5 py-4 text-crema text-sm transition-colors duration-300`
+  `w-full bg-negro border ${hasError ? 'border-red-400' : 'border-dorado/20 focus:border-dorado/60'} outline-none px-4 py-3 sm:px-5 sm:py-4 text-crema text-sm transition-colors duration-300`
 
 export default function CotizacionPage() {
   const INITIAL_FORM: FormData = {
@@ -145,15 +145,15 @@ export default function CotizacionPage() {
   }
 
   if (enviado) return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24">
+    <div className="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-24">
       <div
         className="text-dorado mb-6"
-        style={{ fontSize: '64px', fontFamily: 'Cormorant Garamond, serif', fontWeight: 300 }}
+        style={{ fontSize: 'clamp(48px, 10vw, 64px)', fontFamily: 'Cormorant Garamond, serif', fontWeight: 300 }}
         aria-hidden="true"
       >
         ✓
       </div>
-      <h1 className="display-heading mb-4" style={{ fontSize: '40px' }}>Solicitud recibida</h1>
+      <h1 className="display-heading mb-4" style={{ fontSize: 'clamp(28px, 6vw, 40px)' }}>Solicitud recibida</h1>
       <p className="text-plata max-w-md text-sm leading-loose mb-10">
         Gracias, <strong className="text-crema">{form.nombre}</strong>. Hemos recibido tu solicitud
         y te contactaremos en menos de 48 horas con una propuesta personalizada.
@@ -170,7 +170,7 @@ export default function CotizacionPage() {
   )
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-6">
+    <div className="min-h-screen pt-32 pb-24 px-4 sm:px-6">
       <div className="max-w-2xl mx-auto">
 
         {/* Header */}
@@ -197,7 +197,7 @@ export default function CotizacionPage() {
           {/* ── PASO 1: Datos personales ── */}
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="display-heading mb-8" style={{ fontSize: '28px' }}>
+              <h2 className="display-heading mb-8" style={{ fontSize: 'clamp(22px, 5vw, 28px)' }}>
                 Sobre <em className="text-dorado">ti</em>
               </h2>
 
@@ -313,7 +313,7 @@ export default function CotizacionPage() {
           {/* ── PASO 2: El viaje ── */}
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="display-heading mb-8" style={{ fontSize: '28px' }}>
+              <h2 className="display-heading mb-8" style={{ fontSize: 'clamp(22px, 5vw, 28px)' }}>
                 Tu <em className="text-dorado">viaje</em>
               </h2>
 
@@ -339,7 +339,7 @@ export default function CotizacionPage() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label htmlFor="cot-fecha-salida" className="section-label block mb-2">
                     Fecha de salida
@@ -405,7 +405,7 @@ export default function CotizacionPage() {
                 <p id="lbl-categoria" className="section-label block mb-3">
                   Categoría del viaje *
                 </p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {CATEGORIAS.map(c => (
                     <button
                       key={c}
@@ -466,7 +466,7 @@ export default function CotizacionPage() {
           {/* ── PASO 3: Intereses y mensaje ── */}
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="display-heading mb-8" style={{ fontSize: '28px' }}>
+              <h2 className="display-heading mb-8" style={{ fontSize: 'clamp(22px, 5vw, 28px)' }}>
                 Tus <em className="text-dorado">preferencias</em>
               </h2>
 

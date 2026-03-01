@@ -25,6 +25,7 @@ export default function Input({
   disabled,
   className,
   wrapperClassName,
+  type = 'text',
   ...props
 }: InputProps) {
   const errorId = `${id}-error`
@@ -53,6 +54,7 @@ export default function Input({
       {/* Input ──────────────────────────────────────────────────────────── */}
       <input
         id={id}
+        type={type}
         required={required}
         disabled={disabled}
         aria-required={required}

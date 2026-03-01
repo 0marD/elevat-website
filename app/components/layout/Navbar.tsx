@@ -66,7 +66,7 @@ export default function Navbar() {
           scrolled ? 'bg-negro/95 backdrop-blur-sm border-b border-dorado/10' : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between h-16 sm:h-20">
 
           {/* Logo */}
           <Link

@@ -6,13 +6,13 @@ const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, me 
 export default function Footer() {
   return (
     <footer className="border-t border-dorado/10 bg-negro">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
 
           {/* Brand */}
           <div>
             <div className="mb-6">
-              <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px', fontWeight: 300, letterSpacing: '6px', color: '#F5F0E8' }}>
+              <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(24px, 6vw, 32px)', fontWeight: 300, letterSpacing: '6px', color: '#F5F0E8' }}>
                 ÉLEVA<span style={{ color: '#C9A84C' }}>.</span>
               </span>
               <div className="mt-1" style={{ fontSize: '8px', letterSpacing: '5px', color: 'rgba(201,168,76,0.5)' }}>
@@ -73,7 +73,7 @@ export default function Footer() {
 
         <hr className="divider-gold my-12" />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p className="text-plata/40 text-xs tracking-widest" style={{ fontSize: '9px', letterSpacing: '0.3em' }}>
             © {new Date().getFullYear()} ÉLEVA VIAJES DE AUTOR — TODOS LOS DERECHOS RESERVADOS
           </p>

@@ -73,10 +73,10 @@ export default function ContactoPage() {
   return (
     <div className="min-h-screen pt-32 pb-24">
       <JsonLd data={faqJsonLd} />
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Header */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 mb-12 md:mb-20">
           <div>
             <div className="section-label">Estamos aquí para ti</div>
             <h1 className="display-heading mb-6" style={{ fontSize: 'clamp(40px, 5vw, 64px)' }}>
@@ -145,7 +145,7 @@ export default function ContactoPage() {
           </div>
 
           {/* Quick contact form */}
-          <div className="card-dark p-10">
+          <div className="card-dark p-6 sm:p-10">
             <div className="section-label mb-6">Mensaje rápido</div>
             <QuickContactForm />
           </div>

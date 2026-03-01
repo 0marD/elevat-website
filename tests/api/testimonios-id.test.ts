@@ -6,13 +6,15 @@ vi.mock('next-auth',   () => ({ getServerSession: vi.fn() }))
 vi.mock('@/lib/auth', () => ({ authOptions: {} }))
 vi.mock('@/lib/data/testimonios-store', () => ({
   getAll:     vi.fn(),
+  getById:    vi.fn(),
   setVisible: vi.fn(),
+  update:     vi.fn(),
   remove:     vi.fn(),
   serialize:  vi.fn((t) => ({ ...t, creadoEn: '2024-01-01T00:00:00.000Z' })),
 }))
 
 import { GET, PUT, DELETE } from '@/app/api/testimonios/[id]/route'
-import { getAll, setVisible, remove } from '@/lib/data/testimonios-store'
+import { getById, setVisible, update, remove } from '@/lib/data/testimonios-store'
 
 const mockTestimonio = {
   id:           'uuid-t1',
@@ -45,17 +47,18 @@ beforeEach(() => { vi.clearAllMocks() })
 
 describe('GET /api/testimonios/[id]', () => {
   it('retorna el testimonio cuando existe', async () => {
-    vi.mocked(getAll).mockResolvedValue([mockTestimonio])
+    vi.mocked(getById).mockResolvedValue(mockTestimonio)
 
     const res  = await GET(makeRequest('GET'), ctx('uuid-t1'))
     const data = await res.json()
 
     expect(res.status).toBe(200)
     expect(data.nombre).toBe(mockTestimonio.nombre)
+    expect(getById).toHaveBeenCalledWith('uuid-t1')
   })
 
   it('retorna 404 cuando no existe', async () => {
-    vi.mocked(getAll).mockResolvedValue([mockTestimonio])
+    vi.mocked(getById).mockResolvedValue(null)
 
     const res = await GET(makeRequest('GET'), ctx('no-existe'))
     expect(res.status).toBe(404)
@@ -92,10 +95,10 @@ describe('PUT /api/testimonios/[id]', () => {
     expect(data.visible).toBe(true)
   })
 
-  it('retorna 400 cuando falta el campo visible', async () => {
+  it('retorna 422 cuando el body no es un toggle y falla la validación completa', async () => {
     withSession()
     const res = await PUT(makeRequest('PUT', { otro: 'campo' }), ctx('uuid-t1'))
-    expect(res.status).toBe(400)
+    expect(res.status).toBe(422)
   })
 
   it('retorna 400 cuando visible no es booleano', async () => {
