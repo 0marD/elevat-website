@@ -25,7 +25,7 @@ export default function BlogFilterGrid({ posts }: BlogFilterGridProps) {
   return (
     <>
       {/* Categorías (filtro interactivo) ─────────────────── */}
-      <div className="flex gap-2 flex-wrap mb-16" role="list" aria-label="Categorías del blog">
+      <div className="flex gap-2 flex-wrap mb-10 sm:mb-16" role="list" aria-label="Categorías del blog">
         {CATEGORIAS.map((c) => (
           <button
             key={c}
@@ -34,7 +34,7 @@ export default function BlogFilterGrid({ posts }: BlogFilterGridProps) {
             onClick={() => setCategoriaActiva(c)}
             aria-pressed={categoriaActiva === c}
             className={cn(
-              'px-5 py-2 text-xs border transition-all duration-200',
+              'px-3 sm:px-5 py-1.5 sm:py-2 text-xs border transition-all duration-200',
               categoriaActiva === c
                 ? 'border-dorado text-dorado'
                 : 'border-dorado/15 text-plata/50 hover:border-dorado/40 hover:text-crema'
@@ -58,7 +58,7 @@ export default function BlogFilterGrid({ posts }: BlogFilterGridProps) {
 
           {/* Resto de posts */}
           {rest.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-2 mt-3 sm:mt-2">
               {rest.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
@@ -74,10 +74,10 @@ export default function BlogFilterGrid({ posts }: BlogFilterGridProps) {
 
 function FeaturedPost({ post }: { post: BlogPostSerialized }) {
   return (
-    <div className="group card-dark overflow-hidden mb-2">
+    <div className="group card-dark overflow-hidden mb-3 sm:mb-2">
       <div className="grid grid-cols-1 md:grid-cols-2">
         {post.imagenPortada && (
-          <div className="relative overflow-hidden" style={{ minHeight: '360px' }}>
+          <div className="relative overflow-hidden" style={{ minHeight: '240px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.imagenPortada}
@@ -86,11 +86,11 @@ function FeaturedPost({ post }: { post: BlogPostSerialized }) {
             />
           </div>
         )}
-        <div className="p-12 flex flex-col justify-center">
+        <div className="p-6 sm:p-12 flex flex-col justify-center">
           <div className="section-label mb-4" style={{ color: 'rgba(201,168,76,0.7)' }}>
             {post.categoria} · {formatDate(post.creadoEn)}
           </div>
-          <h2 className="display-heading mb-4" style={{ fontSize: '28px' }}>
+          <h2 className="display-heading mb-4" style={{ fontSize: 'clamp(20px, 4vw, 28px)' }}>
             {post.titulo}
           </h2>
           <p className="text-plata/70 text-sm leading-loose mb-8">{post.extracto}</p>
@@ -123,14 +123,14 @@ function PostCard({ post }: { post: BlogPostSerialized }) {
           />
         </div>
       )}
-      <div className="p-8">
+      <div className="p-5 sm:p-8">
         <div
           className="section-label mb-3"
           style={{ color: 'rgba(201,168,76,0.6)', fontSize: '8px' }}
         >
           {post.categoria} · {formatDate(post.creadoEn)}
         </div>
-        <h2 className="display-heading mb-3" style={{ fontSize: '20px', lineHeight: 1.3 }}>
+        <h2 className="display-heading mb-3" style={{ fontSize: 'clamp(18px, 3vw, 20px)', lineHeight: 1.3 }}>
           {post.titulo}
         </h2>
         <p className="text-plata/60 text-xs leading-loose mb-6">{post.extracto}</p>

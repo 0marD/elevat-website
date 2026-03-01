@@ -117,8 +117,8 @@ export default async function HomePage() {
       <hr className="divider-gold" />
 
       {/* ── PROPUESTA DE VALOR ─────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div>
             <div className="section-label">Por qué ÉLEVA</div>
             <h2 className="display-heading mb-8" style={{ fontSize: 'clamp(36px, 4vw, 52px)' }}>
@@ -134,16 +134,16 @@ export default async function HomePage() {
             <Link href="/cotizacion" className="btn-gold">Empezar a planear</Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {[
               { num: '100%', label: 'Atención personalizada' },
               { num: '48h', label: 'Tiempo de respuesta' },
               { num: '5★', label: 'Hoteles y experiencias' },
               { num: '∞', label: 'Destinos disponibles' },
             ].map(item => (
-              <div key={item.label} className="card-dark p-8 text-center">
+              <div key={item.label} className="card-dark p-4 sm:p-8 text-center">
                 <div className="text-dorado mb-2"
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '48px', fontWeight: 300 }}>
+                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(28px, 7vw, 48px)', fontWeight: 300 }}>
                   {item.num}
                 </div>
                 <div className="text-plata/60" style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase' }}>
@@ -158,8 +158,8 @@ export default async function HomePage() {
       <hr className="divider-gold" />
 
       {/* ── DESTINOS DESTACADOS ────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-28">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-28">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16">
           <div>
             <div className="section-label">Destinos curados</div>
             <h2 className="display-heading" style={{ fontSize: 'clamp(36px, 4vw, 52px)' }}>
@@ -169,7 +169,7 @@ export default async function HomePage() {
           <Link href="/destinos" className="btn-ghost mt-6 md:mt-0">Ver todos →</Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-2">
           {destacados.map((d, i) => {
             const delayClass = ['animate-delay-100', 'animate-delay-200', 'animate-delay-300'][i] ?? ''
             return (
@@ -182,9 +182,9 @@ export default async function HomePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={d.imagenPrincipal} alt={d.nombre} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-negro via-negro/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8">
+              <div className="absolute bottom-0 left-0 p-5 sm:p-8">
                 <div className="section-label mb-2" style={{ color: 'rgba(201,168,76,0.7)' }}>{d.tipo}</div>
-                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px', fontWeight: 300, letterSpacing: '3px', color: '#F5F0E8' }}>
+                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(22px, 4vw, 32px)', fontWeight: 300, letterSpacing: '3px', color: '#F5F0E8' }}>
                   {d.nombre}
                 </div>
                 <div className="text-plata/60 text-xs tracking-widest mt-1">{d.pais}</div>
@@ -203,19 +203,19 @@ export default async function HomePage() {
       <hr className="divider-gold" />
 
       {/* ── CÓMO FUNCIONA ─────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-28">
-        <div className="text-center mb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-28">
+        <div className="text-center mb-12 md:mb-20">
           <div className="section-label">El proceso</div>
           <h2 className="display-heading" style={{ fontSize: 'clamp(36px, 4vw, 52px)' }}>
             Cómo <em className="text-dorado">funciona</em>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-2">
           {pasos.map((p) => (
-            <div key={p.num} className="card-dark p-8 relative">
+            <div key={p.num} className="card-dark p-6 sm:p-8 relative">
               <div className="text-dorado/20 mb-6"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '64px', fontWeight: 300, lineHeight: 1 }}>
+                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(48px, 8vw, 64px)', fontWeight: 300, lineHeight: 1 }}>
                 {p.num}
               </div>
               <div className="text-crema mb-3"
@@ -235,7 +235,7 @@ export default async function HomePage() {
       <hr className="divider-gold" />
 
       {/* ── CTA FINAL ─────────────────────────────── */}
-      <section className="relative py-40 overflow-hidden text-center">
+      <section className="relative py-24 md:py-40 overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse at center, rgba(92,26,46,0.3) 0%, transparent 70%)' }} />
         <div className="relative z-10 max-w-2xl mx-auto px-6">

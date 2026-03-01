@@ -23,10 +23,10 @@ export default async function TestimoniosPage() {
 
   return (
     <div className="min-h-screen pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Encabezado ─────────────────────────────────────── */}
-        <header className="text-center mb-20">
+        <header className="text-center mb-12 md:mb-20">
           <div className="section-label">Lo que dicen nuestros viajeros</div>
           <h1
             className="display-heading mb-6"
@@ -41,22 +41,22 @@ export default async function TestimoniosPage() {
         </header>
 
         {/* Estadísticas ───────────────────────────────────── */}
-        <div className="grid grid-cols-3 gap-2 mb-20">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-12 md:mb-20">
           {[
             { num: '100%', label: 'Satisfacción' },
             { num: '5★',   label: 'Calificación promedio' },
             { num: `+${testimonios.length}`, label: 'Viajeros felices' },
           ].map((s) => (
-            <div key={s.label} className="card-dark p-8 text-center">
+            <div key={s.label} className="card-dark p-4 sm:p-8 text-center">
               <div
                 className="text-dorado mb-2"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '48px', fontWeight: 300 }}
+                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(28px, 7vw, 48px)', fontWeight: 300 }}
               >
                 {s.num}
               </div>
               <div
-                className="text-plata/50"
-                style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase' }}
+                className="text-plata/50 leading-tight"
+                style={{ fontSize: 'clamp(7px, 1.5vw, 9px)', letterSpacing: '2px', textTransform: 'uppercase' }}
               >
                 {s.label}
               </div>
@@ -68,7 +68,7 @@ export default async function TestimoniosPage() {
         {testimonios.length > 0 ? (
           <ul
             aria-label="Testimonios de clientes"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-2"
           >
             {testimonios.map((t) => (
               <TestimonioCard key={t.id} testimonio={t} />
@@ -104,7 +104,7 @@ export default async function TestimoniosPage() {
 
 function TestimonioCard({ testimonio: t }: { testimonio: Testimonio }) {
   return (
-    <li className="card-dark p-8 flex flex-col">
+    <li className="card-dark p-5 sm:p-8 flex flex-col">
 
       {/* Estrellas */}
       <div className="flex gap-1 mb-6" aria-label={`${t.calificacion} de 5 estrellas`}>
@@ -119,7 +119,7 @@ function TestimonioCard({ testimonio: t }: { testimonio: Testimonio }) {
       <div
         aria-hidden="true"
         className="text-dorado/30 mb-4 leading-none"
-        style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '64px', fontWeight: 300 }}
+        style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(48px, 10vw, 64px)', fontWeight: 300 }}
       >
         "
       </div>
